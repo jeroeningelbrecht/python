@@ -1,11 +1,17 @@
 import requests
+from os import environ
 
-response = requests.get('https://love-calculator.p.rapidapi.com/getPercentage',
-                        params={'fname': 'Jeroen', 'sname': 'Taike'},
+names = ['Taike', 'Hayo', 'Pallavi', 'Lea', 'Bernard']
+
+for name in names:
+    response = requests.get('https://love-calculator.p.rapidapi.com/getPercentage',
+                        params={'fname': 'Jeroen', 'sname': name},
                         headers={
                             "X-RapidAPI-Host": "love-calculator.p.rapidapi.com",
-                            "X-RapidAPI-Key": ""
+                            "X-RapidAPI-Key": environ.get("API_KEY")
                         }
                         )
-
-print(response)
+    if response.status_code == 200:
+        print('ok', response.text)
+    else:
+        print('nok', response.status_code)
